@@ -71,7 +71,7 @@ def log(
     console.print(f"已入账 #{entry_id}：{data['project']} {data['minutes']} 分钟")
 
 
-@app.command()
+@app.command("report")
 def report_cmd(week: str = typer.Option("", help="2026-W48，默认本周"), db: Path = typer.Option(None)) -> None:
     """看周报与扣分。"""
     s = _settings(db)
@@ -87,7 +87,6 @@ def report_cmd(week: str = typer.Option("", help="2026-W48，默认本周"), db:
     console.print(f"合计扣分 {result.report.penalty_total}")
 
 
-app.command(name="report")(report_cmd)
 
 
 @app.command()
