@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Hours · 工时</title>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--line:#26303d;--ink:#e6edf3;--dim:#8b949e;--accent:#4f9cf9}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,"PingFang SC",sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:22px;margin:0 0 4px}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:20px}
+  form{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  input,textarea{background:#0d1117;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:9px 12px;font-size:14px}
+  textarea{flex:1;min-width:280px;height:44px}
+  button{background:var(--accent);color:#0d1117;border:none;border-radius:8px;padding:9px 16px;font-weight:600;cursor:pointer}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);font-size:14px}
+  th{color:var(--dim);font-weight:500}
+  .finding{color:#f0883e;font-size:13px}
+  .ok{color:#3fb950;font-size:13px}
+  a{color:var(--accent);text-decoration:none;margin-right:14px}
+  .muted{color:var(--dim);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Hours</h1>
+  <div class="sub">周 {{ week }} · {{ result.report.minutes }} 分钟 · {{ '%.2f' % result.report.amount }} 元 · 扣分 {{ result.report.penalty_total }}</div>
+
+  {% if error %}<div class="finding">入账失败：{{ error }}</div>{% endif %}
+  {% if message %}<div class="ok">{{ message }}</div>{% endif %}
+
+  <form method="post" action="/log">
+    <textarea name="text" placeholder="今天上午都在青禾改登录，大概 3 小时"></textarea>
+    <input name="day" value="{{ today }}" size="10">
+    <input name="start" value="540" size="4">
+    <button type="submit">入账</button>
+  </form>
+
+  <div class="card">
+    <table>
+      <tr><th>日期</th><th>项目</th><th>小时</th><th>金额</th></tr>
+      {% for day, name, h, money in result.report.rows %}
+      <tr><td>{{ day }}</td><td>{{ name }}</td><td>{{ h }}</td><td>{{ '%.2f' % money }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  {% if result.report.findings %}
+  <div class="card">
+    {% for f in result.report.findings %}<div class="finding">{{ f.rule_id }} -{{ f.penalty }} · {{ f.message }}</div>{% endfor %}
+  </div>
+  {% endif %}
+
+  <p><a href="/bill.csv?week={{ week }}">账单 CSV</a><a href="/report.md?week={{ week }}">周报 Markdown</a><a href="/health">健康检查</a></p>
+</div>
+</body>
+</html>

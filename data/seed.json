@@ -1,0 +1,26 @@
+{
+  "projects": [
+    {"name": "青禾 SaaS 改版", "client": "青禾设计", "rate": 320},
+    {"name": "远山数据看板", "client": "远山科技", "rate": 260},
+    {"name": "北岸书店小程序", "client": "北岸书店", "rate": 200}
+  ],
+  "budgets": [
+    {"project": "青禾 SaaS 改版", "kind": "hours", "limit": 24},
+    {"project": "青禾 SaaS 改版", "kind": "amount", "limit": 7000},
+    {"project": "远山数据看板", "kind": "hours", "limit": 6},
+    {"project": "北岸书店小程序", "kind": "amount", "limit": 4000}
+  ],
+  "entries": [
+    {"project": "青禾 SaaS 改版", "day": "2026-11-23", "start": 540, "minutes": 240, "note": "登录页改版与联调"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-23", "start": 840, "minutes": 120, "note": "和设计对空状态"},
+    {"project": "远山数据看板", "day": "2026-11-24", "start": 600, "minutes": 180, "note": "报表导出"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-24", "start": 900, "minutes": 60, "note": "修登录报错"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-25", "start": 540, "minutes": 300, "note": "改版第二版走查"},
+    {"project": "远山数据看板", "day": "2026-11-25", "start": 840, "minutes": 120, "note": "指标口径核对"},
+    {"project": "北岸书店小程序", "day": "2026-11-26", "start": 600, "minutes": 240, "note": "书目页与购物车"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-26", "start": 900, "minutes": 90, "note": "补登录回归"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-27", "start": 540, "minutes": 240, "note": "上线前联调"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-27", "start": 720, "minutes": 120, "note": "上线前联调重复记了一次"}
+  ]
+}
+
