@@ -10,8 +10,9 @@ from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from ..adapters.export import bill_csv
+from ..adapters.llm import build_llm
 from ..adapters.store import SqliteStore
-from ..app.run import book, compose, report, week_range
+from ..app.run import PROMPT, book, compose, report, week_range
 from ..config import Settings
 
 TEMPLATES = Jinja2Templates(directory=str(Path(__file__).resolve().parents[2] / "templates"))
@@ -24,6 +25,7 @@ def current_week() -> str:
 def create_app(settings: Settings, store: SqliteStore | None = None) -> FastAPI:
     app = FastAPI(title="Hours", version="1.0.0")
     store = store or SqliteStore(settings.db_path)
+    llm = build_llm(settings.llm_base_url, settings.llm_api_key, settings.llm_model, PROMPT) if settings.llm_enabled else None
 
     def render(request: Request, week: str, error: str = "", message: str = "") -> HTMLResponse:
         start, end = week_range(week)
@@ -48,7 +50,7 @@ def create_app(settings: Settings, store: SqliteStore | None = None) -> FastAPI:
     ) -> RedirectResponse:
         d = date.fromisoformat(day) if day else date.today()
         try:
-            _, data = book(store, settings, text, d, int(start))
+            _, data = book(store, settings, text, d, int(start), llm)
         except ValueError as exc:
             return RedirectResponse(url=f"/?week={current_week()}&error={exc}", status_code=303)
         return RedirectResponse(

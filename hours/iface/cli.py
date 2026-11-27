@@ -10,9 +10,11 @@ import typer
 from rich.console import Console
 
 from ..adapters.export import bill_csv
+from ..adapters.llm import build_llm
+from ..adapters.notify import WebhookNotifier
 from ..adapters.store import SqliteStore
 from ..app.jobs import enqueue_weekly, run_due
-from ..app.run import book, compose, report, week_range
+from ..app.run import PROMPT, book, compose, report, week_range
 from ..config import Settings
 from ..config import settings as default_settings
 from ..doctor import main as doctor_main
@@ -64,7 +66,8 @@ def log(
     s = _settings(db)
     d = date.fromisoformat(day) if day else date.today()
     try:
-        entry_id, data = book(_store(s), s, text, d, start)
+        llm = build_llm(s.llm_base_url, s.llm_api_key, s.llm_model, PROMPT) if s.llm_enabled else None
+        entry_id, data = book(_store(s), s, text, d, start, llm)
     except ValueError as exc:
         console.print(f"[red]{exc}[/]")
         raise typer.Exit(code=2) from exc
@@ -106,7 +109,7 @@ def jobs(
     s = _settings(db)
     store = _store(s)
     if run:
-        console.print(f"发出 {run_due(store, s, date.today())} 条")
+        console.print(f"发出 {run_due(store, s, date.today(), WebhookNotifier(s.webhook_url))} 条")
         return
     w = week or date.today().strftime("%G-W%V")
     console.print("已入队" if enqueue_weekly(store, w, date.today()) else "这周已排过")

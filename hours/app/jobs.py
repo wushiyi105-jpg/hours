@@ -4,18 +4,16 @@ from __future__ import annotations
 
 from datetime import date
 
-from ..adapters.notify import WebhookNotifier
-from ..adapters.store import SqliteStore
 from ..config import Settings
+from ..ports import NotifierPort, StorePort
 from .run import compose
 
 
-def enqueue_weekly(store: SqliteStore, week: str, due: date) -> bool:
+def enqueue_weekly(store: StorePort, week: str, due: date) -> bool:
     return store.enqueue(f"hours:{week}", "weekly_digest", week, due)
 
 
-def run_due(store: SqliteStore, settings: Settings, today: date) -> int:
-    notifier = WebhookNotifier(settings.webhook_url)
+def run_due(store: StorePort, settings: Settings, today: date, notifier: NotifierPort) -> int:
     sent = 0
     for job in store.due_jobs(today):
         text = compose(store, job.payload)
