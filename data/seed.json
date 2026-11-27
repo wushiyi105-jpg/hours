@@ -20,7 +20,28 @@
     {"project": "北岸书店小程序", "day": "2026-11-26", "start": 600, "minutes": 240, "note": "书目页与购物车"},
     {"project": "青禾 SaaS 改版", "day": "2026-11-26", "start": 900, "minutes": 90, "note": "补登录回归"},
     {"project": "青禾 SaaS 改版", "day": "2026-11-27", "start": 540, "minutes": 240, "note": "上线前联调"},
-    {"project": "青禾 SaaS 改版", "day": "2026-11-27", "start": 720, "minutes": 120, "note": "上线前联调重复记了一次"}
+    {"project": "青禾 SaaS 改版", "day": "2026-11-27", "start": 720, "minutes": 120, "note": "上线前联调重复记了一次"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-02", "start": 540, "minutes": 180, "note": "需求澄清与接口梳理"},
+    {"project": "远山数据看板", "day": "2026-11-03", "start": 540, "minutes": 240, "note": "数据源接入"},
+    {"project": "北岸书店小程序", "day": "2026-11-04", "start": 540, "minutes": 120, "note": "书目页结构"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-04", "start": 900, "minutes": 120, "note": "登录态联调"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-05", "start": 540, "minutes": 300, "note": "权限模块重构"},
+    {"project": "远山数据看板", "day": "2026-11-06", "start": 540, "minutes": 180, "note": "图表口径对齐"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-09", "start": 540, "minutes": 240, "note": "租户配置页"},
+    {"project": "北岸书店小程序", "day": "2026-11-10", "start": 540, "minutes": 240, "note": "购物车与库存"},
+    {"project": "远山数据看板", "day": "2026-11-10", "start": 900, "minutes": 120, "note": "导出任务"},
+    {"project": "远山数据看板", "day": "2026-11-11", "start": 540, "minutes": 300, "note": "指标缓存优化"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-12", "start": 540, "minutes": 360, "note": "支付回调与对账"},
+    {"project": "北岸书店小程序", "day": "2026-11-13", "start": 540, "minutes": 180, "note": "订单列表"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-13", "start": 900, "minutes": 150, "note": "异常状态补测"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-16", "start": 540, "minutes": 300, "note": "报表页联调"},
+    {"project": "远山数据看板", "day": "2026-11-17", "start": 540, "minutes": 240, "note": "慢查询排查"},
+    {"project": "北岸书店小程序", "day": "2026-11-18", "start": 540, "minutes": 300, "note": "会员积分"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-19", "start": 540, "minutes": 240, "note": "灰度发布脚本"},
+    {"project": "远山数据看板", "day": "2026-11-20", "start": 540, "minutes": 180, "note": "看板性能回归"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-21", "start": 540, "minutes": 300, "note": "上线清单核对"},
+    {"project": "北岸书店小程序", "day": "2026-11-22", "start": 540, "minutes": 240, "note": "支付沙箱"},
+    {"project": "青禾 SaaS 改版", "day": "2026-11-22", "start": 900, "minutes": 180, "note": "回滚方案演练"}
   ]
 }
 

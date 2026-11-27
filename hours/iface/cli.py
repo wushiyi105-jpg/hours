@@ -15,6 +15,7 @@ from ..adapters.notify import WebhookNotifier
 from ..adapters.store import SqliteStore
 from ..app.jobs import enqueue_weekly, run_due
 from ..app.run import PROMPT, book, compose, report, week_range
+from ..app.statement import aggregate, csv_text, email_text
 from ..config import Settings
 from ..config import settings as default_settings
 from ..doctor import main as doctor_main
@@ -97,6 +98,38 @@ def bill(week: str = typer.Option(""), db: Path = typer.Option(None)) -> None:
     w = week or date.today().strftime("%G-W%V")
     start, end = week_range(w)
     console.print(bill_csv(_store(s), start, end), end="")
+
+
+@app.command()
+def statement(
+    month: str = typer.Option("", help="YYYY-MM，默认本月"),
+    out: Path = typer.Option(None, help="输出 CSV；同时写同名邮件正文 .md"),
+    tax: float = typer.Option(0.06, help="税率，默认 0.06"),
+    db: Path = typer.Option(None),
+) -> None:
+    """月底账单：CSV + 可直接发的邮件正文。"""
+    s = _settings(db)
+    store = _store(s)
+    m = month or date.today().strftime("%Y-%m")
+    try:
+        rows = aggregate(store, store.list_projects(), m)
+    except ValueError as exc:
+        console.print(f"[red]{exc}[/]")
+        raise typer.Exit(code=2) from exc
+    if not rows:
+        console.print(f"[yellow]{m} 没有工时[/]")
+        raise typer.Exit(code=1)
+    csv = csv_text(rows, tax, m)
+    mail = email_text(rows, tax, m)
+    if out:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(csv, encoding="utf-8")
+        target = out.with_suffix(".md")
+        target.write_text(mail, encoding="utf-8")
+        console.print(f"[green]已写出[/] {out} + {target}（{len(rows)} 个项目）")
+    else:
+        console.print(mail)
+        console.print("[dim]加 --out 账单.csv 同时写 CSV 与邮件正文。[/]")
 
 
 @app.command()
