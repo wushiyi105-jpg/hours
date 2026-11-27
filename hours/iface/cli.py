@@ -90,8 +90,6 @@ def report_cmd(week: str = typer.Option("", help="2026-W48，默认本周"), db:
     console.print(f"合计扣分 {result.report.penalty_total}")
 
 
-
-
 @app.command()
 def bill(week: str = typer.Option(""), db: Path = typer.Option(None)) -> None:
     """出账单 CSV。"""

@@ -52,6 +52,9 @@ Low-confidence entries are flagged and not booked; fix the wording and log again
 **Do the bill and the report agree?**
 Yes, both call the same rate function.
 
+**Was the Docker image verified?**
+Docker is not installed on the build machine, so `docker build .` was not run and the image is unverified; only the Dockerfile and ports were checked statically.
+
 ## Commands
 
 See the Chinese README (`README.md`) for the command table with flags; every command supports `--help`.
@@ -64,11 +67,11 @@ FastAPI + Uvicorn, Jinja2, pydantic / pydantic-settings, httpx, Typer + Rich, SQ
 
 ```mermaid
 graph LR
-  A[一句话] --> M[本地解析：项目 / 时长 / 置信度]
-  M --> R[规则：低置信 / 重叠 / 长日 / 预算]
-  R --> P[模型只润色备注]
-  P --> G[数字守卫]
-  G --> O[周报 + 账单 CSV]
+  A[one sentence] --> M[local parse: project / duration / confidence]
+  M --> R[rules: low confidence / overlap / long day / budget]
+  R --> P[model polishes note only]
+  P --> G[number guard]
+  G --> O[weekly report + billing CSV]
 ```
 
 ## Layout
