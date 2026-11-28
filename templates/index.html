@@ -1,6 +1,6 @@
 {% from "_macros.html" import shell, head, stats, card, tag, empty, note %}
-{% call shell("Hours", "工时账单", true) %}
-{{ head("工时与账单", "第 " ~ week ~ " 周 · 记一句自然语言，自动拆成可结账的条目") }}
+{% call shell("Hours", "自由职业账单台", true) %}
+{{ head("月底该给客户开多少", "第 " ~ week ~ " 周 · 一句话记工时，右边就是客户将看到的账单") }}
 
 {{ stats([
   ("本周工时", "%.1f"|format(result.report.minutes / 60), "小时"),
@@ -23,7 +23,7 @@
 </form>
 {% endcall %}
 
-{% call card("本周明细", result.report.rows|length ~ " 条") %}
+{% call card("本周工时日志", result.report.rows|length ~ " 条") %}
 {% if result.report.rows %}
 <div class="table-wrap">
   <table class="table">
@@ -40,6 +40,28 @@
 {% endif %}
 {% endcall %}
 
+<div class="cols section-gap">
+  <div>
+    {% call card("客户将看到的账单", "第 " ~ week ~ " 周") %}
+      <div class="big">{{ "%.2f"|format(result.report.amount) }} <small>元</small></div>
+      <div class="detail" style="margin-top:6px">{{ result.report.rows|length }} 条明细 · {{ "%.1f"|format(result.report.minutes / 60) }} 小时 · 导出时保留固定单号</div>
+      <div class="form-actions">
+        <a class="btn btn--primary" href="/bill.csv?week={{ week }}">导出账单 CSV</a>
+        <a class="btn" href="/report.md?week={{ week }}">周报 Markdown</a>
+      </div>
+    {% endcall %}
+  </div>
+  <div>
+    {% call card("本月口径", "账单工作纸") %}
+      <div class="stack">
+        <div class="list-row"><span class="t">计费工时</span><span class="mono-num">{{ "%.1f"|format(result.report.minutes / 60) }} 小时</span></div>
+        <div class="list-row"><span class="t">应结金额</span><span class="mono-num">{{ "%.2f"|format(result.report.amount) }} 元</span></div>
+        <div class="list-row"><span class="t">扣分</span><span class="mono-num">{{ result.report.penalty_total }}</span></div>
+      </div>
+    {% endcall %}
+  </div>
+</div>
+
 {% if result.report.findings %}
 {% call card("扣分明细", result.report.penalty_total ~ " 分") %}
   <div class="stack">
@@ -51,8 +73,6 @@
 {% endif %}
 
 <div class="form-actions">
-  <a class="btn" href="/bill.csv?week={{ week }}">账单 CSV</a>
-  <a class="btn" href="/report.md?week={{ week }}">周报 Markdown</a>
   <a class="btn btn--ghost" href="/health">健康检查</a>
 </div>
 {% endcall %}

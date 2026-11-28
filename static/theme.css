@@ -1,0 +1,28 @@
+:root {
+  --bg: #FBF8F1;
+  --bg-subtle: #F5EFE3;
+  --bg-muted: #EAE2D2;
+  --card: #FFFFFF;
+  --text: #1B1B18;
+  --text-2: #55534c;
+  --text-3: #6a675e;
+  --text-4: #716e64;
+  --border: #E7E1D3;
+  --border-2: #D8D1C1;
+  --border-3: #C7BEAA;
+  --accent: #1F5C5B;
+  --accent-soft: #E3F0EE;
+  --accent-ink: #174644;
+  --radius: 8px;
+  --radius-sm: 5px;
+  --radius-lg: 12px;
+}
+:root[data-theme="dark"] {
+  --accent: #6FB8B4;
+  --accent-soft: #12312F;
+  --accent-ink: #A9DFDB;
+}
+.page-head h1 { font-family: var(--mono); font-size: 26px; letter-spacing: -.03em; }
+.table .num, .stat .v, .mono-num { font-family: var(--mono); }
+.btn--primary { background: #1F5C5B; border-color: #1F5C5B; color: #fff; }
+
